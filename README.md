@@ -1,3 +1,5 @@
+NB: This API is only accessible via POSTMAN or similar tools.
+
 \*\* Documentation
 
 \*\* Installation
@@ -25,4 +27,3 @@ Then use the token to get communication with the Gemini AI via the API:
 
 api/v1/gemini
 
-NB: This API is only accessible via POSTMAN or similar tools.
