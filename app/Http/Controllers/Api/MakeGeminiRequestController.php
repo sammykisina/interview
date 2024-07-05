@@ -12,8 +12,8 @@ use JustSteveKing\StatusCode\Http;
 final class MakeGeminiRequestController
 {
     public function __construct(
-        protected GeminiService $geminiService
-    ){}
+        protected GeminiService $geminiService,
+    ) {}
 
 
     public function __invoke(GeminiRequest $request)
