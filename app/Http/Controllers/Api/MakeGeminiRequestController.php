@@ -14,8 +14,15 @@ final class MakeGeminiRequestController
     public function __invoke(GeminiRequest $request)
     {
         try {
+            /**
+             * send an external api request 
+             */
             $result = Gemini::geminiPro()->generateContent($request->validated()['prompt']);
 
+
+            /**
+             * process the response if any returned
+             */
             if ($result) {
                 return [
                     'response' => $result->text(),
@@ -24,7 +31,9 @@ final class MakeGeminiRequestController
                 ];
             }
         } catch (Exception $e) {
-            // Handle general exceptions
+            /**
+             * handle general exceptions
+             */
             return [
                 'message' => $e->getMessage(),
                 'status' => Http::UNPROCESSABLE_ENTITY(),
