@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\GeminiRequest;
 use App\Services\GeminiService;
 use Exception;
+use Illuminate\Support\Facades\RateLimiter;
 use JustSteveKing\StatusCode\Http;
 
 final class MakeGeminiRequestController
@@ -22,20 +23,32 @@ final class MakeGeminiRequestController
             /**
              * send an external api request
              */
-            $result = $this->geminiService->ChatWithGemini(
+
+            // $executed = RateLimiter::attempt(
+            //     'chat-with-gemini:',
+            //     $perMinute = 5,
+            //     function (): void {},
+            // );
+
+            // if ( ! $executed) {
+            //     return 'Too many messages sent!';
+            // }
+
+            $results = $this->geminiService->ChatWithGemini(
                 prompt: $request->validated()['prompt'],
             );
 
-            /**
-             * process the response if any returned
-             */
-            if ($result) {
+             if ($results) {
                 return [
-                    'response' => $result->text(),
+                    'response' => $results->text(),
                     'status' => Http::OK(),
                     'message' => 'Request processed successfully',
                 ];
             }
+            /**
+             * process the response if any returned
+             */
+
         } catch (Exception $e) {
             /**
              * handle general exceptions

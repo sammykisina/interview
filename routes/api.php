@@ -18,7 +18,7 @@ Route::prefix('auth')->as('api:auth:')->group(function (): void {
  * AI API Routes
  */
 
-Route::middleware('auth:sanctum','throttle:60,1')->group(function (): void {
+Route::middleware('auth:sanctum', 'throttle:60,1')->group(function (): void {
     Route::prefix('gemini')->as('gemini:')->group(function (): void {
         Route::post('/', MakeGeminiRequestController::class)->name('make-gemini-request');
     });
