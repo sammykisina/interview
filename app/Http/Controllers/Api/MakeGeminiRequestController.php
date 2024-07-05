@@ -5,20 +5,26 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\GeminiRequest;
+use App\Services\GeminiService;
 use Exception;
-use Gemini\Laravel\Facades\Gemini;
 use JustSteveKing\StatusCode\Http;
 
 final class MakeGeminiRequestController
 {
+    public function __construct(
+        protected GeminiService $geminiService
+    ){}
+
+
     public function __invoke(GeminiRequest $request)
     {
         try {
             /**
-             * send an external api request 
+             * send an external api request
              */
-            $result = Gemini::geminiPro()->generateContent($request->validated()['prompt']);
-
+            $result = $this->geminiService->ChatWithGemini(
+                prompt: $request->validated()['prompt'],
+            );
 
             /**
              * process the response if any returned
